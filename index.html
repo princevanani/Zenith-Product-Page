@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zenith — Autofill any form, any site, zero setup</title>
+<meta name="description" content="Zenith learns your form fields as you type and fills them in everywhere else — scholarship applications, college admissions, government exam forms, and anything else you'll ever open. Free, and 100% on-device.">
+<link rel="icon" href="assets/icon128.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  /* Page-specific styles for the landing page only */
+  .hero {
+    padding: 64px 0 40px;
+  }
+  .hero .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+    align-items: center;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--blue);
+    background: var(--blue-tint);
+    border: 1px solid var(--blue-tint-line);
+    border-radius: var(--radius-pill);
+    padding: 6px 12px;
+    margin-bottom: 20px;
+  }
+  .eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green-solid); }
+  h1.headline {
+    font-size: 44px;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    margin: 0 0 20px;
+    font-weight: 700;
+  }
+  .headline .accent { color: var(--blue); }
+  .sub {
+    font-size: 17px;
+    color: var(--slate);
+    max-width: 480px;
+    margin: 0 0 32px;
+  }
+  .hero-ctas { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 28px; }
+  .trust-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--slate);
+  }
+  .trust-row span { display: flex; align-items: center; gap: 6px; }
+
+  /* ---- Signature element: the self-filling mock form ---- */
+  .hero-visual {
+    position: relative;
+    padding: 30px;
+    border-radius: var(--radius-lg);
+    background:
+      repeating-linear-gradient(
+        to bottom,
+        transparent, transparent 27px,
+        var(--line) 28px
+      ),
+      linear-gradient(180deg, #ffffff, #fbfcfe);
+  }
+  .mock-form {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+  }
+  .mock-form-head {
+    display: flex; align-items: center; gap: 8px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--line);
+    background: #fafbfc;
+  }
+  .mock-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line); }
+  .mock-url {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--slate-light);
+    margin-left: 6px;
+  }
+  .mock-body { padding: 20px 20px 16px; }
+  .mock-field {
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    transition: background-color 0.4s ease;
+  }
+  .mock-field.filled { background: var(--green-bg); }
+  .mock-field label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.04em;
+    color: var(--slate);
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+  .mock-input {
+    height: 30px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+  }
+  .mock-field.filled .mock-input { border-color: #bbf0cf; }
+  .mock-input-text {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--ink);
+  }
+  .mock-badge {
+    margin: 14px 20px 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--blue);
+    color: #fff;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 12.5px;
+    padding: 8px 14px;
+    border-radius: var(--radius-pill);
+  }
+
+  /* ---- Problem strip ---- */
+  .problem {
+    padding: 40px 0;
+    text-align: center;
+  }
+  .problem p {
+    font-size: 15px;
+    color: var(--slate);
+    max-width: 620px;
+    margin: 0 auto;
+  }
+  .form-tags {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+  }
+  .form-tag {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-pill);
+    padding: 6px 12px;
+  }
+
+  /* ---- Feature tags ---- */
+  .section { padding: 56px 0; }
+  .section-head { max-width: 560px; margin: 0 0 36px; }
+  .section-head .eyebrow { margin-bottom: 14px; }
+  .section-head h2 { font-size: 28px; letter-spacing: -0.01em; margin: 0 0 10px; }
+  .section-head p { color: var(--slate); font-size: 15px; margin: 0; }
+
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .feature-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    padding: 20px;
+  }
+  .feature-tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    color: var(--blue);
+    background: var(--blue-tint);
+    border-radius: 6px;
+    padding: 4px 8px;
+    margin-bottom: 12px;
+  }
+  .feature-card h3 { font-size: 15.5px; margin: 0 0 6px; }
+  .feature-card p { font-size: 13.5px; color: var(--slate); margin: 0; }
+
+  /* ---- How it works ---- */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .step { position: relative; padding-top: 8px; }
+  .step .q {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--slate-light);
+    display: block;
+    margin-bottom: 10px;
+  }
+  .step h3 { font-size: 17px; margin: 0 0 8px; }
+  .step p { font-size: 14px; color: var(--slate); margin: 0; }
+
+  /* ---- Privacy callout band ---- */
+  .privacy-band {
+    background: var(--blue-tint);
+    border-top: 1px solid var(--blue-tint-line);
+    border-bottom: 1px solid var(--blue-tint-line);
+    padding: 48px 0;
+  }
+  .privacy-band .container { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
+  .privacy-band .icon {
+    width: 52px; height: 52px; border-radius: 14px;
+    background: #fff; border: 1px solid var(--blue-tint-line);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; flex-shrink: 0;
+  }
+  .privacy-band h3 { font-size: 18px; margin: 0 0 6px; }
+  .privacy-band p { font-size: 14px; color: #1e3a8a; margin: 0; max-width: 560px; }
+  .privacy-band .cta-wrap { margin-left: auto; }
+
+  /* ---- Final CTA ---- */
+  .final-cta {
+    padding: 72px 0 64px;
+    text-align: center;
+  }
+  .final-cta h2 { font-size: 30px; margin: 0 0 12px; letter-spacing: -0.01em; }
+  .final-cta p { color: var(--slate); margin: 0 0 28px; }
+
+  @media (max-width: 900px) {
+    .hero .container { grid-template-columns: 1fr; }
+    .feature-grid { grid-template-columns: repeat(2, 1fr); }
+    .steps { grid-template-columns: 1fr; }
+    h1.headline { font-size: 34px; }
+    .privacy-band .cta-wrap { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <a href="index.html" class="brand"><span class="bolt">⚡</span> Zenith</a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#how-it-works">How it works</a>
+      <a href="privacy-policy.html">Privacy</a>
+      <a href="terms-and-conditions.html">Terms</a>
+      <a href="support.html">Support</a>
+    </div>
+    <div class="nav-actions">
+      <a class="btn btn-primary btn-sm" href="https://chromewebstore.google.com/detail/REPLACE_WITH_YOUR_EXTENSION_ID" target="_blank" rel="noopener">Add to Chrome</a>
+      <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <div>
+      <span class="eyebrow"><span class="dot"></span> FREE · 100% ON-DEVICE</span>
+      <!-- <h1 class="headline">Stop typing your father's name<br>for the <span class="accent">fifth</span> form this month.</h1> -->
+      <h1 class="headline">Fill it once.<br>Never type it <span class="accent">again</span>.</h1>
+      <p class="sub">Zenith remembers what you type once, and fills it in everywhere
+        else — job portals, scholarship applications, college admissions, government exam
+        forms, and every other form you'll open after that.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="https://chromewebstore.google.com/detail/REPLACE_WITH_YOUR_EXTENSION_ID" target="_blank" rel="noopener">Add to Chrome — it's free</a>
+        <a class="btn btn-ghost" href="#how-it-works">See how it works</a>
+      </div>
+      <div class="trust-row">
+        <span>🔒 nothing leaves your device</span>
+        <span>🌐 works on any site</span>
+        <span>🗣 EN · HI · GU</span>
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <div class="mock-form">
+        <div class="mock-form-head">
+          <span class="mock-dot"></span><span class="mock-dot"></span><span class="mock-dot"></span>
+          <span class="mock-url">scholarship-portal.gov.in/apply</span>
+        </div>
+        <div class="mock-body">
+          <div class="mock-field" data-value="Aditi Sharma">
+            <label>Full Name</label>
+            <div class="mock-input"><span class="mock-input-text"></span></div>
+          </div>
+          <div class="mock-field" data-value="Ramesh Sharma">
+            <label>Father's Name</label>
+            <div class="mock-input"><span class="mock-input-text"></span></div>
+          </div>
+          <div class="mock-field" data-value="OBC">
+            <label>Category</label>
+            <div class="mock-input"><span class="mock-input-text"></span></div>
+          </div>
+          <div class="mock-field" data-value="+91 98765 43210">
+            <label>Mobile Number</label>
+            <div class="mock-input"><span class="mock-input-text"></span></div>
+          </div>
+        </div>
+        <span class="mock-badge">⚡ Autofill (4)</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="problem">
+  <div class="container">
+    <p>Same 40 fields. A different website every time.</p>
+    <div class="form-tags">
+      <span class="form-tag">job applications</span>
+      <span class="form-tag">scholarship portals</span>
+      <span class="form-tag">college admissions</span>
+      <span class="form-tag">govt exam forms</span>
+      <span class="form-tag">renewal applications</span>
+      <span class="form-tag">…and everything else</span>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="features">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow mono">WHY ZENITH</span>
+      <h2>Built differently from every other autofill tool</h2>
+      <p>Most autofill extensions make you build a profile before they're useful. Zenith starts working from the first form you fill out.</p>
+    </div>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <span class="feature-tag mono">ZERO_SETUP</span>
+        <h3>No profile to build</h3>
+        <p>Fill a form the normal way once — Zenith learns every field automatically. No setup screen, ever.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-tag mono">ANY_FIELD_TYPE</span>
+        <h3>Not just text boxes</h3>
+        <p>Dropdowns, radio buttons, checkboxes, and file uploads — photo, signature, certificates — all handled.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-tag mono">ANY_LANGUAGE</span>
+        <h3>Reads your language</h3>
+        <p>Recognizes fields labeled in English, Hindi, or Gujarati — out of the box, no configuration.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-tag mono">LOCAL_ONLY</span>
+        <h3>Nothing leaves your device</h3>
+        <p>No account, no cloud sync, no server. Everything Zenith learns stays on your browser, period.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="how-it-works">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow mono">HOW IT WORKS</span>
+      <h2>Three steps. That's the whole product.</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <span class="q mono">Q1</span>
+        <h3>Fill a form normally</h3>
+        <p>The first time, type your details in like you always have. Nothing to set up beforehand.</p>
+      </div>
+      <div class="step">
+        <span class="q mono">Q2</span>
+        <h3>Zenith remembers</h3>
+        <p>Every field gets saved locally, matched to what it actually means — even if the next site labels it differently.</p>
+      </div>
+      <div class="step">
+        <span class="q mono">Q3</span>
+        <h3>One click, next time</h3>
+        <p>Open any other form — a floating button appears. Click it, and every recognizable field fills itself.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="privacy-band">
+  <div class="container">
+    <div class="icon">🔒</div>
+    <div>
+      <h3>Your Personal Information is not our business model.</h3>
+      <p>Zenith has no server. What you type stays in your browser, on your device — we couldn't sell your data if we wanted to, because we never have it.</p>
+    </div>
+    <div class="cta-wrap">
+      <a class="btn btn-ghost btn-sm" href="privacy-policy.html">Read the privacy policy →</a>
+    </div>
+  </div>
+</section>
+
+<section class="final-cta">
+  <div class="container">
+    <h2>Ready to stop retyping?</h2>
+    <p>Free, no account required, two-minute install.</p>
+    <a class="btn btn-primary" href="https://chromewebstore.google.com/detail/REPLACE_WITH_YOUR_EXTENSION_ID" target="_blank" rel="noopener">Add to Chrome — it's free</a>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <a href="index.html" class="brand"><span class="bolt">⚡</span> Zenith</a>
+    <div class="footer-links">
+      <a href="privacy-policy.html">Privacy Policy</a>
+      <a href="terms-and-conditions.html">Terms &amp; Conditions</a>
+      <a href="support.html">Support</a>
+    </div>
+    <div class="footer-copy">© <span class="placeholder">2026</span> <span class="placeholder">Prince Vanani | DecodeBits</span></div>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
+</body>
+</html>

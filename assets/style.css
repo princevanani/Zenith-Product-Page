@@ -1,0 +1,265 @@
+/* ============================================================
+   Zenith site — shared design tokens & components
+   Palette extends the extension's own blue (#2563eb) rather than
+   replacing it. Mono type is used specifically for anything that
+   represents a form field, label, or piece of entered data — a
+   deliberate nod to the product's actual subject matter.
+   ============================================================ */
+
+   :root {
+    --blue: #2563eb;
+    --blue-dark: #1d4ed8;
+    --blue-tint: #eff6ff;
+    --blue-tint-line: #bfdbfe;
+  
+    --ink: #0f172a;
+    --slate: #64748b;
+    --slate-light: #94a3b8;
+  
+    --paper: #f7f8fa;
+    --card: #ffffff;
+    --line: #e6e8ee;
+  
+    --green-bg: #eafff1;
+    --green-text: #0f6e56;
+    --green-solid: #16a34a;
+  
+    --amber-bg: #fef3c7;
+    --amber-text: #78350f;
+    --amber-solid: #f59e0b;
+  
+    --font-sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --radius-pill: 999px;
+  
+    --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.04), 0 8px 24px rgba(15, 23, 42, 0.06);
+    --shadow-btn: 0 6px 16px rgba(37, 99, 235, 0.28);
+  
+    --container: 1120px;
+  }
+  
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  }
+  
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  a { color: var(--blue); }
+  :focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+  
+  .mono {
+    font-family: var(--font-mono);
+    letter-spacing: 0.02em;
+  }
+  
+  .container {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  
+  /* ---- Nav ---- */
+  .site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: rgba(247, 248, 250, 0.86);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .site-nav .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .brand .bolt {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px; height: 28px;
+    background: var(--blue);
+    color: #fff;
+    border-radius: 8px;
+    font-size: 15px;
+  }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+  .nav-links a {
+    color: var(--slate);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-actions { display: flex; align-items: center; gap: 16px; }
+  .nav-toggle {
+    display: none;
+    background: none; border: none; cursor: pointer;
+    width: 36px; height: 36px; border-radius: 8px;
+  }
+  .nav-toggle:hover { background: var(--line); }
+  .nav-toggle span {
+    display: block; width: 18px; height: 2px; background: var(--ink);
+    margin: 4px auto; border-radius: 2px;
+  }
+  
+  /* ---- Buttons ---- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    border-radius: var(--radius-pill);
+    padding: 11px 20px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-primary {
+    background: var(--blue);
+    color: #fff;
+    box-shadow: var(--shadow-btn);
+  }
+  .btn-primary:hover { background: var(--blue-dark); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--line);
+  }
+  .btn-ghost:hover { background: var(--card); border-color: var(--slate-light); }
+  .btn-sm { padding: 8px 14px; font-size: 13px; }
+  
+  /* ---- Footer ---- */
+  .site-footer {
+    border-top: 1px solid var(--line);
+    margin-top: 96px;
+  }
+  .site-footer .container {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .footer-links { display: flex; gap: 22px; flex-wrap: wrap; }
+  .footer-links a { color: var(--slate); text-decoration: none; font-size: 13.5px; }
+  .footer-links a:hover { color: var(--ink); }
+  .footer-copy { color: var(--slate-light); font-size: 12.5px; }
+  .placeholder { color: #b45309; background: #fffbeb; padding: 0 4px; border-radius: 4px; }
+  
+  /* ---- Generic content page (privacy/terms/support) ---- */
+  .doc-wrap { max-width: 760px; margin: 0 auto; padding: 56px 24px 40px; }
+  .doc-wrap h1 { font-size: 30px; margin: 0 0 6px; letter-spacing: -0.01em; }
+  .doc-wrap .updated { color: var(--slate); font-size: 13px; margin: 0 0 36px; }
+  .doc-wrap h2 { font-size: 19px; margin: 40px 0 12px; }
+  .doc-wrap h3 { font-size: 14.5px; margin: 22px 0 6px; }
+  .doc-wrap p, .doc-wrap li { font-size: 15px; color: #374151; }
+  .doc-wrap ul { padding-left: 22px; }
+  .doc-wrap li { margin-bottom: 6px; }
+  .doc-wrap table { width: 100%; border-collapse: collapse; margin: 14px 0 22px; font-size: 13.5px; }
+  .doc-wrap th, .doc-wrap td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .doc-wrap th { color: var(--slate); font-weight: 600; width: 30%; }
+  .doc-wrap code { background: #f1f2f6; padding: 1px 6px; border-radius: 5px; font-family: var(--font-mono); font-size: 12.5px; }
+  
+  .callout, .warn {
+    border-radius: var(--radius-md);
+    padding: 16px 18px;
+    font-size: 13.5px;
+    margin: 20px 0;
+  }
+  .callout { background: var(--blue-tint); border: 1px solid var(--blue-tint-line); color: #1e3a8a; }
+  .warn { background: var(--amber-bg); border: 1px solid #fde68a; color: var(--amber-text); }
+  
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-card);
+    padding: 20px 22px;
+    margin-bottom: 16px;
+  }
+  
+  /* ---- Copyable contact email (support page) ---- */
+  .contact-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .contact-email {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-pill);
+    padding: 6px 6px 6px 14px;
+  }
+  .copy-btn {
+    font-family: var(--font-sans);
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--blue);
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-pill);
+    padding: 4px 11px;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .copy-btn:hover { background: var(--blue-tint); border-color: var(--blue-tint-line); }
+  .copy-btn.copied { color: var(--green-text); background: var(--green-bg); border-color: #bbf0cf; }
+  
+  /* ---- Mobile nav ---- */
+  @media (max-width: 760px) {
+    .nav-links { display: none; }
+    .nav-toggle { display: block; }
+    .site-nav.open .nav-links {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+      position: absolute;
+      top: 64px; left: 0; right: 0;
+      background: var(--paper);
+      border-bottom: 1px solid var(--line);
+      padding: 12px 24px 20px;
+    }
+    .site-nav.open .nav-links a { padding: 10px 0; width: 100%; }
+  }
