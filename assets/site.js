@@ -67,4 +67,44 @@ document.addEventListener("DOMContentLoaded", () => {
     while (true) await playOnce();
   }
   loop();
+  
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const modal = document.getElementById("reviewModal");
+  const closeButton = document.getElementById("reviewModalClose");
+  const closeX = document.getElementById("reviewModalX");
+  const addToChromeButtons = document.querySelectorAll(".add-to-chrome");
+
+  function openModal(event) {
+    event.preventDefault();
+    modal.classList.add("show");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeModal() {
+    modal.classList.remove("show");
+    document.body.style.overflow = "";
+  }
+
+  addToChromeButtons.forEach(function (button) {
+    button.addEventListener("click", openModal);
+  });
+
+  closeButton.addEventListener("click", closeModal);
+  closeX.addEventListener("click", closeModal);
+
+  // Close when clicking outside the modal card
+  modal.addEventListener("click", function (event) {
+    if (event.target === modal) {
+      closeModal();
+    }
+  });
+
+  // Close with Escape key
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape" && modal.classList.contains("show")) {
+      closeModal();
+    }
+  });
 });
